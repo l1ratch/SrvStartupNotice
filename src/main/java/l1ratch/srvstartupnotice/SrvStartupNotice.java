@@ -6,33 +6,41 @@ import org.bukkit.event.server.ServerLoadEvent;
 //import org.bukkit.event.server.ServerShutdownEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.Bukkit;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.DataOutputStream;
 
-public class SvrStartupNotice extends JavaPlugin implements Listener {
+public class SrvStartupNotice extends JavaPlugin implements Listener {
 
-    private String botToken = "YOUR_BOT_TOKEN";
-    private String chatId = "YOUR_CHAT_ID";
+    private String botToken = getConfig().getString("botToken");
+    private String chatId = getConfig().getString("chatId");
+    private String serverId = getConfig().getString("serverId");
 
     @Override
     public void onEnable() {
+        final File f = new File(this.getDataFolder() + File.separator + "config.yml");
+        if (!f.exists()) {
+            saveDefaultConfig();
+            //Bukkit.getLogger().info("Файл конфигурации не был найден! Создаю новый...");
+        }
         getServer().getPluginManager().registerEvents(this, this);
     }
 
     @Override
     public void onDisable() {
-        sendMessageToTelegram("Сервер Minecraft выключается...");
+        sendMessageToTelegram(getConfig().getString("serverDisable"));
     }
 
     @EventHandler
     public void onServerStart(ServerLoadEvent event) {
-        sendMessageToTelegram("Сервер Minecraft включился!");
+        sendMessageToTelegram(getConfig().getString("serverEnable"));
     }
 
     private void sendMessageToTelegram(String message) {
-        String urlString = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chatId + "&text=" + message;
+        String urlString = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chatId + "&text=" + message + serverId;
 
         try {
             URL url = new URL(urlString);
