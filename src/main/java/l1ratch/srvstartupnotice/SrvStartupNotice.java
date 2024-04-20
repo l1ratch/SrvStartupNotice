@@ -54,9 +54,9 @@ public class SrvStartupNotice extends JavaPlugin implements Listener {
 
             int responseCode = con.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
-                Bukkit.getLogger().info("Сообщение успешно отправлено в канал Telegram");
+                Bukkit.getLogger().info("The message was successfully sent to the Telegram channel!");
             } else {
-                Bukkit.getLogger().warning("Не удалось отправить сообщение в канал Telegram. Код ошибки: " + responseCode);
+                Bukkit.getLogger().warning("The message could not be sent to the Telegram channel. Error code: " + responseCode);
             }
         } catch (IOException e) {
             e.printStackTrace();
