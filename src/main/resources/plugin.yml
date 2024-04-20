@@ -1,0 +1,4 @@
+name: SrvStartupNotice
+version: '${project.version}'
+main: l1ratch.srvstartupnotice.SrvStartupNotice
+api-version: '1.19'
