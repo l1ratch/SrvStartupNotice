@@ -1,3 +1,6 @@
+# SrvStartupNotice by l1ratch
+# More detailed: https://github.com/l1ratch/SrvStartupNotice
+
 botToken: "Telegram_BotToken"
 chatId: "Telegram_ChatID"
 serverId: "(ServerName)"
